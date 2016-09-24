@@ -7,7 +7,7 @@ var StatStore = new Store(Dispatcher);
 var _stats = {};
 
 var resetStats = function(stats) {
-	debugger;
+	// debugger;
 	_stats = {}
 	_stats = stats;
 
@@ -16,14 +16,13 @@ var resetStats = function(stats) {
 
 
 StatStore.all = function() {
-	return stats;
+	return _stats;
 }
 
 StatStore.__onDispatch = function(payload) {
 	switch(payload.actionType) {
 	case Constants.STATS:
 		resetStats(payload.stats);
-		console.log(payload.stats);
 		break;
 	}
 }

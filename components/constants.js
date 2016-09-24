@@ -1,3 +1,4 @@
 module.exports = {
-	STATS: 'STATS'
+	STATS: 'STATS',
+	ERROR: 'ERROR'
 };
