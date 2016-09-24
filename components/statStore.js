@@ -4,27 +4,34 @@ var Dispatcher = require('./dispatcher.js');
 
 var StatStore = new Store(Dispatcher);
 
-var _stats = {};
+var _orderCount = {};
+var _reasonCount = {};
 
-var resetStats = function(stats) {
-	// debugger;
-	_stats = {}
-	_stats = stats;
+var resetOrders = function(orderCount) {
+	_orderCount = {};
 
-	StatStore.__emitChange();
+	_orderCount = orderCount;
+	console.log(_orderCount);
 };
 
 
-StatStore.all = function() {
-	return _stats;
-}
+var resetReasons = function(reasonCount) {
+	_reasonCount = {};
+
+	_reasonCount = reasonCount;
+	console.log(_reasonCount);
+};
 
 StatStore.__onDispatch = function(payload) {
 	switch(payload.actionType) {
-	case Constants.STATS:
-		resetStats(payload.stats);
+	case Constants.ORDERS:
+		resetOrders(payload.orderCount);
+		break;
+	case Constants.REASONS:
+		resetReasons(payload.reasonCount);
 		break;
 	}
+	this.__emitChange()
 }
 
 

@@ -9,6 +9,20 @@ module.exports = {
 			actionType: Constants.STATS,
 			stats: stats
 		});
+	},
+
+	getOrderCount: function(orderCount) {
+		Dispatcher.dispatch({
+			actionType: Constants.ORDERS,
+			orderCount: orderCount
+		});
+	},
+
+	getReasonCount: function(reasonCount) {
+		Dispatcher.dispatch({
+			actionType: Constants.REASONS,
+			reasonCount: reasonCount
+		});
 	}
 
 };

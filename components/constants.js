@@ -1,4 +1,5 @@
 module.exports = {
-	STATS: 'STATS',
+	ORDERS: 'ORDERS',
+	REASONS: 'REASONS',
 	ERROR: 'ERROR'
 };
