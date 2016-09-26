@@ -6,7 +6,7 @@ var TempUtil = require('./myUtil');
 
 module.exports = React.createClass({
 	getInitialState: function() {
-		return {returnStartDate: '', returnEndDate: '', reasonStart: '', resonEnd: '',
+		return {
 		rtnCounts: [], rtnValues:[], rtnActive: false,
 		rsnCounts: [], rsnValues:[], rsnActive: false, errors: []}
 	},
@@ -39,16 +39,6 @@ module.exports = React.createClass({
     		)
     	}
     },
-
-	rtnStartDate: function(event) {
-		this.setState({returnStartDate: event.target.value})
-		// console.log(this.state.returnStartDate);
-		// debugger;
-	},	
-
-	rtnEndDate: function(event) {
-		this.setState({returnEndDate: event.target.value})
-	},
 
 	activateReturns: function() {
 		if (this.state.rtnActive) {
@@ -118,36 +108,38 @@ module.exports = React.createClass({
 		this.setState({errors: []});
 		var strNums = ['0','1','2','3','4','5','6','7','8','9'];
 
-		// var rtnStart = document.getElementById('rtnStart').value;
-		// var rtnEn = document.getElementById('rtnEn').value;
+		var rtnStart = document.getElementById('rtnStart').value;
+		// var rtnEnd = document.getElementById('rtnEnd').value;
+		// console.log(rtnStart);
+		// console.log(rtnEnd);
 
 		//front end validations
-		if ((this.state.returnStartDate.length !== 10) || (this.state.returnEndDate.length !== 10)) {
+		if ((rtnStart.length !== 10) || (rtnEnd.length !== 10)) {
 			this.setState({errors: ["Invalid Start or End Date"]});
 			// debugger;
 			return;
 		};
-		for (var i=0; i < this.state.returnStartDate.length; i++) {
+		for (var i=0; i < rtnStart.length; i++) {
 			if ((i === 4) || (i === 7)) {
-				if (this.state.returnStartDate[i] !== '-') {
+				if (rtnStart[i] !== '-') {
 					this.setState({errors: ["Invalid Formatting - Return Start Date"]});
 					// this.state.errors.push("Inavlid Formatting - Dashes");
 					return;
 				}
-			} else if (strNums.indexOf(this.state.returnStartDate[i]) === -1) {
+			} else if (strNums.indexOf(rtnStart[i]) === -1) {
 				this.setState({errors: ["Invalid Formatting - Return Start Date"]});
 				// this.state.errors.push("Non-Number Entered");
 				return;
 			}
 		};
-		for (var i=0; i<this.state.returnEndDate.length; i++) {
+		for (var i=0; i<rtnEnd.length; i++) {
 			if ((i === 4) || (i === 7)) {
-				if (this.state.returnEndDate[i] !== '-') {
+				if (rtnEnd[i] !== '-') {
 					this.setState({errors: ["Invalid Formatting - Return End Date"]});
 					// this.state.errors.push("Inavlid Formatting - Dashes");
 					return;
 				}
-			} else if (strNums.indexOf(this.state.returnEndDate[i]) === -1) {
+			} else if (strNums.indexOf(rtnEnd[i]) === -1) {
 				this.setState({errors: ["Invalid Formatting - Return End Date"]});
 				// this.state.errors.push("Non-Number Entered");
 				return;
@@ -156,56 +148,51 @@ module.exports = React.createClass({
 
 		// console.log('good');
 		//info ok, send to Util
-		TempUtil.getOrderCount(this.state.returnStartDate, this.state.returnEndDate);
+		TempUtil.getOrderCount(rtnStart, rtnEnd);
 		// ReturnChart.activate();
 		this.setState({rtnActive: true})
 
-	},
-
-	reasonStartDate: function(event) {
-		this.setState({reasonStart: event.target.value})
-	},	
-
-	reasonEndDate: function(event) {
-		this.setState({reasonEnd: event.target.value})
-		// console.log(this.state.reasonEnd);
 	},
 
 	updateReasonCount: function() {
 		this.setState({errors: []});
 		var strNums = ['0','1','2','3','4','5','6','7','8','9'];
 
+		var rsnStart = document.getElementById('rsnStart').value;
+		var rsnEnd = document.getElementById('rsnEnd').value;
+		// console.log(rsnStart);
+		// console.log(rsnEnd);
 
-		if ((this.state.reasonStart.length !== 10) || (this.state.reasonEnd.length !== 10)) {
+		if ((rsnStart.length !== 10) || (rsnEnd.length !== 10)) {
 			this.setState({errors: ["Invalid Start or End Date"]});
 			// debugger;
 			return;
 		};
-		for (var i=0; i < this.state.reasonStart.length; i++) {
+		for (var i=0; i < rsnStart.length; i++) {
 			if ((i === 4) || (i === 7)) {
-				if (this.state.reasonStart[i] !== '-') {
+				if (rsnStart[i] !== '-') {
 					this.setState({errors: ["Invalid Formatting - Reason Start Date"]});
 					return;
 				}
-			} else if (strNums.indexOf(this.state.reasonStart[i]) === -1) {
+			} else if (strNums.indexOf(rsnStart[i]) === -1) {
 				this.setState({errors: ["Invalid Formatting - Reason Start Date"]});
 				return;
 			}
 		};
-		for (var i=0; i<this.state.reasonEnd.length; i++) {
+		for (var i=0; i<rsnEnd.length; i++) {
 			if ((i === 4) || (i === 7)) {
-				if (this.state.reasonEnd[i] !== '-') {
+				if (rsnEnd[i] !== '-') {
 					this.setState({errors: ["Invalid Formatting - Reason End Date"]});
 					return;
 				}
-			} else if (strNums.indexOf(this.state.reasonEnd[i]) === -1) {
+			} else if (strNums.indexOf(rsnEnd[i]) === -1) {
 				this.setState({errors: ["Invalid Formatting - Reason End Date"]});
 				return;
 			}
 		};
 
 		//info checked, send to util
-		TempUtil.getReasonCount(this.state.reasonStart, this.state.reasonEnd);
+		TempUtil.getReasonCount(rsnStart, rsnEnd);
 		// ReasonChart.activate();
 		this.setState({rsnActive: true})
 
@@ -221,11 +208,11 @@ module.exports = React.createClass({
 					<form onSubmit={this.updateOrderCount}>
 
 						<label>Start Date
-						<input type='text' id='rtnStart' defaultValue='YYYY-MM-DD' onChange={this.rtnStartDate}/>
+						<input type='text' id='rtnStart' defaultValue='YYYY-MM-DD'/>
 						</label>
 
 						<label>End Date
-						<input type='text' id='rtnEnd' defaultValue='YYYY-MM-DD' onChange={this.rtnEndDate}/>
+						<input type='text' id='rtnEnd' defaultValue='YYYY-MM-DD'/>
 						</label>
 
 
@@ -243,11 +230,11 @@ module.exports = React.createClass({
 					<form onSubmit={this.updateReasonCount}>
 
 						<label>Start Date
-						<input type='text' defaultValue='YYYY-MM-DD' onChange={this.reasonStartDate}/>
+						<input type='text' id='rsnStart' defaultValue='YYYY-MM-DD'/>
 						</label>
 
 						<label>End Date
-						<input type='text' defaultValue='YYYY-MM-DD' onChange={this.reasonEndDate}/>
+						<input type='text' id='rsnEnd' defaultValue='YYYY-MM-DD'/>
 						</label>
 
 						<input className='submit' type='submit' value='Submit!'/>

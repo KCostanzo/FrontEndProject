@@ -31,7 +31,7 @@ StatStore.returnCount = function() {
 			rtnCountArr.push(order['count'])
 		});
 
-		console.log(rtnCountArr);
+		// console.log(rtnCountArr);
 		return rtnCountArr;
 	}
 };
@@ -44,7 +44,7 @@ StatStore.returnValues = function() {
 			rtnValArr.push(order['value'])
 		});
 
-		console.log(rtnValArr);
+		// console.log(rtnValArr);
 		return rtnValArr;	
 	}
 };
@@ -57,7 +57,7 @@ StatStore.reasonCount = function() {
 			rsnCountArr.push(reason['count'])
 		});
 
-		console.log(rsnCountArr);
+		// console.log(rsnCountArr);
 		return rsnCountArr;
 	}
 };
@@ -70,7 +70,7 @@ StatStore.reasonValues = function() {
 			rsnValArr.push(reason['value'])
 		});
 
-		console.log(rsnValArr);
+		// console.log(rsnValArr);
 		return rsnValArr;
 	}
 };
