@@ -46,11 +46,15 @@ module.exports = React.createClass({
 
 	activateReturns: function() {
 		if (this.state.rtnActive) {
+			if (this.rtnChart != null) {
+				this.rtnChart.destroy();
+			}
+
 			var ctx = document.getElementById('rtnChart');
 			// ctx.style.width = "70%";
 			// ctx.style.height = "50%";
-			// ctx.border = "1px solid black";
-			var rtnChart = new Chart(ctx, {
+
+			this.rtnChart = new Chart(ctx, {
 			    type: 'line',
 			    data: {
 			        labels: this.state.rtnValues,
@@ -74,16 +78,15 @@ module.exports = React.createClass({
 
 	activateReasons: function() {
 		if (this.state.rsnActive) {
-			// if (rsnChart != null) {
-			// 	rsnChart.destroy();
-			// }
+			if (this.rsnChart != null) {
+				this.rsnChart.destroy();
+			}
 			// document.getElementById('rsnChart').remove();
 			// document.getElementById('reasonCount').append('<canvas id="rsnChart"></canvas>');
 
 			var ctx = document.getElementById('rsnChart');
 
-
-			var rsnChart = new Chart(ctx, {
+			this.rsnChart = new Chart(ctx, {
 			    type: 'bar',
 			    data: {
 			        labels: this.state.rsnValues,
@@ -238,7 +241,7 @@ module.exports = React.createClass({
 						<input type='text' id='rtnEnd' defaultValue='YYYY-MM-DD'/>
 						</label>
 
-						<label id='radioField'>Group By  
+						<label id='radioField'>Group By:  
 						</label>
 						<label>Day
 						<input type='radio' value='day' checked={this.state.groupSelect === 'day'} onChange={this.groupChange}/>
