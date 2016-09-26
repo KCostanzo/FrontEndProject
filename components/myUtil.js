@@ -25,10 +25,10 @@ module.exports = {
 		});
 	},
 
-	getReasonCount: function(startDate, endDate, category = '', limit = '') {
+	getReasonCount: function(startDate, endDate, limit = '', category = '') {
 		$.ajax({
 			method: 'GET',
-			url: 'http://13.84.149.217:8000/returns/countdistinct/return_reason?end_date=' + endDate + '&format=json&start_date=' + startDate,
+			url: 'http://13.84.149.217:8000/returns/countdistinct/return_reason?end_date=' + endDate + '&format=json&start_date=' + startDate + limit + category,
 			success: function(reasonCount) {
 				ServerActions.getReasonCount(reasonCount);
 			}

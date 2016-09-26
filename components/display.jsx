@@ -6,7 +6,7 @@ var TempUtil = require('./myUtil');
 
 module.exports = React.createClass({
 	getInitialState: function() {
-		return {
+		return {	groupSelect: 'day',
 		rtnCounts: [], rtnValues:[], rtnActive: false,
 		rsnCounts: [], rsnValues:[], rsnActive: false, errors: []}
 	},
@@ -40,6 +40,10 @@ module.exports = React.createClass({
     	}
     },
 
+	groupChange: function(event){
+		this.setState({groupSelect: event.target.value});
+	},
+
 	activateReturns: function() {
 		if (this.state.rtnActive) {
 			var ctx = document.getElementById('rtnChart');
@@ -53,12 +57,12 @@ module.exports = React.createClass({
 			        datasets: [{
 			            label: '# of Returns',
 			            data: this.state.rtnCounts,
-			            backgroundColor: [
+			            backgroundColor: 
 			                'rgba(255, 99, 132, 0.2)'
-			            ],
-			            borderColor: [
+			            ,
+			            borderColor: 
 			                'rgba(255,99,132,1)'
-			            ],
+			            ,
 			            borderWidth: 1
 			        }]
 			    }
@@ -70,7 +74,14 @@ module.exports = React.createClass({
 
 	activateReasons: function() {
 		if (this.state.rsnActive) {
+			// if (rsnChart != null) {
+			// 	rsnChart.destroy();
+			// }
+			// document.getElementById('rsnChart').remove();
+			// document.getElementById('reasonCount').append('<canvas id="rsnChart"></canvas>');
+
 			var ctx = document.getElementById('rsnChart');
+
 
 			var rsnChart = new Chart(ctx, {
 			    type: 'bar',
@@ -110,8 +121,6 @@ module.exports = React.createClass({
 
 		var rtnStart = document.getElementById('rtnStart').value;
 		var rtnEnd = document.getElementById('rtnEnd').value;
-		// console.log(rtnStart);
-		// console.log(rtnEnd);
 
 		//front end validations
 		if ((rtnStart.length !== 10) || (rtnEnd.length !== 10)) {
@@ -128,7 +137,6 @@ module.exports = React.createClass({
 				}
 			} else if (strNums.indexOf(rtnStart[i]) === -1) {
 				this.setState({errors: ["Invalid Formatting - Return Start Date"]});
-				// this.state.errors.push("Non-Number Entered");
 				return;
 			}
 		};
@@ -136,19 +144,24 @@ module.exports = React.createClass({
 			if ((i === 4) || (i === 7)) {
 				if (rtnEnd[i] !== '-') {
 					this.setState({errors: ["Invalid Formatting - Return End Date"]});
-					// this.state.errors.push("Inavlid Formatting - Dashes");
 					return;
 				}
 			} else if (strNums.indexOf(rtnEnd[i]) === -1) {
 				this.setState({errors: ["Invalid Formatting - Return End Date"]});
-				// this.state.errors.push("Non-Number Entered");
 				return;
 			}
 		};
 
+		var checkRadio = this.state.groupSelect;
+		if  (checkRadio === 'day') {
+			checkRadio = '';
+		} else {
+			checkRadio = '&groupby=' + checkRadio;
+		}
+		// console.log(checkRadio);
 		// console.log('good');
 		//info ok, send to Util
-		TempUtil.getOrderCount(rtnStart, rtnEnd);
+		TempUtil.getOrderCount(rtnStart, rtnEnd, checkRadio);
 		// ReturnChart.activate();
 		this.setState({rtnActive: true})
 
@@ -161,7 +174,13 @@ module.exports = React.createClass({
 		var rsnStart = document.getElementById('rsnStart').value;
 		var rsnEnd = document.getElementById('rsnEnd').value;
 		// console.log(rsnStart);
-		// console.log(rsnEnd);
+		var lim = document.getElementById('limit').value;
+		for (var i = 0; i < lim.length; i++) {
+			if (strNums.indexOf(lim[i]) === -1) {
+				this.setState({errors: ['Invalid Limit']});
+				return;
+			}
+		};
 
 		if ((rsnStart.length !== 10) || (rsnEnd.length !== 10)) {
 			this.setState({errors: ["Invalid Start or End Date"]});
@@ -191,8 +210,12 @@ module.exports = React.createClass({
 			}
 		};
 
+		if (lim !== '') {
+			lim = '&limit=' + lim;
+			console.log(lim);
+		}
 		//info checked, send to util
-		TempUtil.getReasonCount(rsnStart, rsnEnd);
+		TempUtil.getReasonCount(rsnStart, rsnEnd, lim);
 		// ReasonChart.activate();
 		this.setState({rsnActive: true})
 
@@ -204,7 +227,7 @@ module.exports = React.createClass({
 				{this.errors()}
 				<br/>
 				Return Counter
-				<div className='orderCount'>
+				<div id='orderCount'>
 					<form onSubmit={this.updateOrderCount}>
 
 						<label>Start Date
@@ -215,6 +238,17 @@ module.exports = React.createClass({
 						<input type='text' id='rtnEnd' defaultValue='YYYY-MM-DD'/>
 						</label>
 
+						<label id='radioField'>Group By  
+						</label>
+						<label>Day
+						<input type='radio' value='day' checked={this.state.groupSelect === 'day'} onChange={this.groupChange}/>
+						</label>
+						<label>Week
+						<input type='radio' value='week' checked={this.state.groupSelect === 'week'} onChange={this.groupChange}/>
+						</label>
+						<label>Month
+						<input type='radio' value='month' checked={this.state.groupSelect === 'month'} onChange={this.groupChange}/>
+						</label>
 
           				<input className='submit' type='submit' value='Submit!'/>
 					</form>
@@ -226,7 +260,7 @@ module.exports = React.createClass({
 
 
 				Reason Counter
-				<div className='reasonCount'>
+				<div id='reasonCount'>
 					<form onSubmit={this.updateReasonCount}>
 
 						<label>Start Date
@@ -235,6 +269,10 @@ module.exports = React.createClass({
 
 						<label>End Date
 						<input type='text' id='rsnEnd' defaultValue='YYYY-MM-DD'/>
+						</label>
+
+						<label> Limit: 
+						<input type='text' id='limit'/>
 						</label>
 
 						<input className='submit' type='submit' value='Submit!'/>
