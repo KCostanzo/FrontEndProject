@@ -15,9 +15,10 @@ module.exports = {
 
 
 	getOrderCount: function(startDate, endDate, groupby = '', category = '') {
+		// debugger;
 		$.ajax({
 			method: 'GET',
-			url: 'http://13.84.149.217:8000/returns/count/order_date?end_date=' + endDate + '&format=json&start_date=' + startDate,
+			url: 'http://13.84.149.217:8000/returns/count/order_date?end_date=' + endDate + '&format=json&start_date=' + startDate + groupby + category,
 			success: function(orderCount) {
 				ServerActions.getOrderCount(orderCount);
 			}
