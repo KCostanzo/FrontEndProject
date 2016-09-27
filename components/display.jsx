@@ -261,7 +261,6 @@ module.exports = React.createClass({
 				</div>
 				<br/>
 
-
 				Reason Counter
 				<div id='reasonCount'>
 					<form onSubmit={this.updateReasonCount}>
@@ -287,5 +286,4 @@ module.exports = React.createClass({
 			</div>
 			);
 	}
-
 });
