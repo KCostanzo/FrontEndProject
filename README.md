@@ -11,6 +11,28 @@
 - npm run webpack
 - open index.html
 
+## API Calls 
+
+From Front End Components:
+
+```javascript
+    TempUtil.getOrderCount(rtnStart, rtnEnd, checkRadio);
+```
+
+Util API function (variables generated in component): 
+
+```javascript
+  getOrderCount: function(startDate, endDate, groupby = '', category = '') {
+    $.ajax({
+      method: 'GET',
+      url: 'http://13.84.149.217:8000/returns/count/order_date?end_date=' + endDate + '&format=json&start_date=' + startDate + groupby + category,
+      success: function(orderCount) {
+        ServerActions.getOrderCount(orderCount);
+      }
+    });
+  },
+```
+
 ## Front End Validations
 
 ```javascript
@@ -30,29 +52,6 @@
         return;
       }
     };
-```
-
-## API Calls 
-
-From Front End Components:
-
-```javascript
-    TempUtil.getOrderCount(rtnStart, rtnEnd, checkRadio);
-```
-
-Util API function (variables generated in component): 
-
-```javascript
-  getOrderCount: function(startDate, endDate, groupby = '', category = '') {
-    // debugger;
-    $.ajax({
-      method: 'GET',
-      url: 'http://13.84.149.217:8000/returns/count/order_date?end_date=' + endDate + '&format=json&start_date=' + startDate + groupby + category,
-      success: function(orderCount) {
-        ServerActions.getOrderCount(orderCount);
-      }
-    });
-  },
 ```
 
 ## Chart Updating
@@ -92,7 +91,6 @@ Charts will automatically re-render any time api call goes out and refreshes sto
     }
   },
 ```
-
 
 ### Future Upgrades
 - [ ] Categories When Availible
