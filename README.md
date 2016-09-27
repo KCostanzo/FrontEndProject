@@ -11,9 +11,6 @@
 - npm run webpack
 - open index.html
 
-
-### Imput Functions
-
 ## Front End Validations
 
 ```javascript
@@ -58,7 +55,7 @@ Util API function (variables generated in component):
   },
 ```
 
-### Chart Updating
+## Chart Updating
 
 Charts will automatically re-render any time api call goes out and refreshes store via React state variables linked to store listeners:
 
@@ -99,5 +96,5 @@ Charts will automatically re-render any time api call goes out and refreshes sto
 
 ### Future Upgrades
 - [ ] Categories When Availible
-- [ ] use setTimeout on API calling function in component to add refresh
+- [ ] use setTimeout on API calling function in component to add auto-refresh
 - [ ] Seperate Charts into Seperate Chart Components
