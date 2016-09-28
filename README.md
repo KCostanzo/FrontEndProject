@@ -11,12 +11,25 @@
 - npm run webpack
 - open index.html
 
+
+### Summary
+
+ This is a React.js chart generator. The main front end display is front_end/display.jsx where inputs are taken from user, turned into html parameters, and send to the Util (front_end/myUtil.js) where an AJAX request goes out. On success the data is sent to the Store at statStore.js (via flux dispatcher) which also triggers a re-render in display.jsx due to store linked state variables.
+
+#### Important File Locations
+
+index.jsx - main outer React Component. Go here to add Routes, etc
+front_end/display.jsx - main React Component. Here is where to find Chart Logic, Front End  Validations, Util function calls.
+front_end/statStore.js - main store Component. Makes Data availible to display.jsx, triggers re-render when updated.
+front_end/myUtil.js - AJAX requests. Here to change API params (variable logic lives in display)
+
+
 ## API Calls 
 
-From Front End Components:
+From Front End:
 
 ```javascript
-    TempUtil.getOrderCount(rtnStart, rtnEnd, checkRadio);
+  Util.getOrderCount(rtnStart, rtnEnd, checkRadio);
 ```
 
 Util API function (variables generated in component): 
@@ -96,3 +109,4 @@ Charts will automatically re-render any time api call goes out and refreshes sto
 - [ ] Categories When Availible
 - [ ] use setTimeout on API calling function in component to add auto-refresh
 - [ ] Seperate Charts into Seperate Chart Components
+- [ ] make 1 re-usable validation function

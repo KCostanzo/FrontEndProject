@@ -6,7 +6,7 @@ var React = require('react'),
     hashHistory = require('react-router').hashHistory;
 
 
-var MainDisplay = require('./components/display');
+var MainDisplay = require('./front_end/display');
 
 
 var App = React.createClass({
