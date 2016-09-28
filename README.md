@@ -18,10 +18,10 @@
 
 #### Important File Locations
 
-index.jsx - main outer React Component. Go here to add Routes, etc
-front_end/display.jsx - main React Component. Here is where to find Chart Logic, Front End  Validations, Util function calls.
-front_end/statStore.js - main store Component. Makes Data availible to display.jsx, triggers re-render when updated.
-front_end/myUtil.js - AJAX requests. Here to change API params (variable logic lives in display)
+- index.jsx - main outer React Component. Go here to add Routes, etc
+- front_end/display.jsx - main React Component. Here is where to find Chart Logic, Front End  Validations, Util function calls.
+- front_end/statStore.js - main store Component. Makes Data availible to display.jsx, triggers re-render when updated.
+- front_end/myUtil.js - AJAX requests. Here to change API params (variable logic lives in display)
 
 
 ## API Calls 
